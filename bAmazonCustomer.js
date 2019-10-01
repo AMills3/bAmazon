@@ -97,3 +97,4 @@ connection.query("UPDATE products SET product_sales = ${newSales} WHERE id = ${i
         })
     })
 };
+connection.destroy()
