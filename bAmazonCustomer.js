@@ -14,7 +14,6 @@ connection.connect(function (err) {
     goShopping();
   });
 
-  
 var items = [];
                 
 function goShopping() {
@@ -81,7 +80,6 @@ connection.query("UPDATE products SET productSales = ${newSales} WHERE id = ${it
 }
     else {
     console.log("We only have ${productData.stock} in stock.")
-    purchase();
                 }
             }
         })
