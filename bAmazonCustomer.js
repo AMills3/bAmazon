@@ -4,14 +4,20 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: " ",
+    password: "Miller00!",
     database: "bamazonDb"
 });
 
+connection.connect(function (err) {
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId);
+  });
+
+  
 var itemArray = [];
                 
 
-function showInventory(){
+function goShopping() {
     connection.query(
         "SELECT * FROM products",
         function (error, response){
@@ -28,7 +34,7 @@ function showInventory(){
                     price: response[i].price        
             });
         }
-            console.table(itemArray);
+        return itemArray;
             askUser();
         }
     });
