@@ -17,7 +17,6 @@ connection.connect(function (err) {
   
 var items = [];
                 
-
 function goShopping() {
     connection.query(
         "SELECT * FROM products",
