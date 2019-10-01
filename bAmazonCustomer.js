@@ -11,10 +11,11 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
+    goShopping();
   });
 
   
-var itemArray = [];
+var items = [];
                 
 
 function goShopping() {
@@ -34,14 +35,14 @@ function goShopping() {
                     price: response[i].price        
             });
         }
-        return itemArray;
-            askUser();
+        return items;
+            purchase();
         }
     });
 }
                 
-function askUser() {
-inquirer.prompt( [ {
+function purchase() {
+inquirer.prompt([{
     type: "input",
     name: "itemSelection",
     message: "Please enter ID of the item you would like to purchase."
@@ -61,7 +62,7 @@ var quantity = answer.quantity;
     }
     else {
     productData = response[0];
-        if (productData.stock_quantity > quantity) {
+        if (productData.stock > quantity) {
             console.log("Yes, we have ${productData.name} in stock.");
 
 var newTotal = productData.stock - quantity
@@ -83,7 +84,7 @@ connection.query("UPDATE products SET product_sales = ${newSales} WHERE id = ${i
     return;
 }
     else {
-    askUser();
+    purchase();
             }
         });
     }
@@ -91,7 +92,7 @@ connection.query("UPDATE products SET product_sales = ${newSales} WHERE id = ${i
 }
     else {
     console.log("We only have ${productData.stock} in stock.")
-    askUser();
+    purchase();
                 }
             }
         })
