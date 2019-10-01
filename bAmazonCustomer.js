@@ -21,30 +21,20 @@ var items = [];
 function goShopping() {
     connection.query(
         "SELECT * FROM products",
-        function (error, response){
+        function (error, response) {
             if (error) {
             console.log("An error has occured.")
                 return;
         }
-            if (!error) {
-            for (var i = 0; i < response.length; i++) {
-                itemArray.push({
-                    id: response[i].id,
-                    item: response[i].name,
-                    department: response[i].department,
-                    price: response[i].price        
-            });
-        }
         return items;
             purchase();
-        }
     });
 }
                 
 function purchase() {
 inquirer.prompt([{
     type: "input",
-    name: "itemSelection",
+    name: "itemChoice",
     message: "Please enter ID of the item you would like to purchase."
 },
     {
@@ -53,7 +43,7 @@ inquirer.prompt([{
         message: "How many would you like to purchase?"
     }]).then(function(answer) {
 
-var item = parseInt(answer.itemSelection);
+var item = parseInt(answer.itemChoice);
 var quantity = answer.quantity;
     connection.query("SELECT * FROM products WHERE id = ${item}", function (error, response) {
         if (error) {
@@ -76,9 +66,9 @@ connection.query("UPDATE products SET stock = ${newTotal} WHERE id = ${item}", f
     else {
     console.log("Your total is $${price}.")
 
-var newSales = productData.product_sales + price
+var newSales = productData.productSales + price
     
-connection.query("UPDATE products SET product_sales = ${newSales} WHERE id = ${item}", function(error, response) {
+connection.query("UPDATE products SET productSales = ${newSales} WHERE id = ${item}", function(error, response) {
     if (error) {
     console.log("Quantity update failed.");
     return;
